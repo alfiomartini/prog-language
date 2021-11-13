@@ -56,6 +56,11 @@ const start = () => {
           } else {
             eval(args[2]);
           }
+        };
+        if (expr.value === 'while'){
+          while (eval(args[0])){
+            eval(args[1]);
+          }
         }
         break;
     }

@@ -15,3 +15,12 @@ const prg07 = `256`;
 const prg08 = `-(+(20,30), *(15,10))`; // -100
 const prg09 = `define(x, 10)`;
 const prg10 = `+(x,10)`;
+// total = 55
+const prg11 = `
+    do(define(total,0),
+      define(count,1),
+      while(<(count,11),
+      do(define(total, +(total, count)),
+         define(count, +(count, 1)))),
+      print(total))
+`;
