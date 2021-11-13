@@ -1,3 +1,5 @@
+const symbolTable = new Map();
+
 function eval(exprTree){
   switch (exprTree.type) {
     case "string":
@@ -5,6 +7,13 @@ function eval(exprTree){
     case "number":
       return parseFloat(exprTree.value);
       break;
+    case "identifier":
+      const id = exprTree.value;
+      if (symbolTable.has(id)){
+        return symbolTable.get(id)
+      } else {
+        throw new SyntaxError(`identifier ${id} is not defined.`)
+      };
     case "apply":
       let {expr, args} = exprTree;
       if (expr.value === "+"){
@@ -19,6 +28,17 @@ function eval(exprTree){
       if (expr.value === "/"){
         return  eval(args[0]) / eval(args[1]);
       };
+      if (expr.value === 'define'){
+        symbolTable.set(args[0].value, eval(args[1]))
+      };
+      if (expr.value === 'do'){
+        for (let arg of args){
+          eval(arg);
+        }
+      };
+      if (expr.value === 'print'){
+        console.log(eval(args[0]));
+      }
       break;
   }
 }
