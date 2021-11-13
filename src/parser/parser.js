@@ -26,7 +26,7 @@ function match_id(program) {
   }
   // identifiers (for definitions)
   else if ((match = /^\w+|[-*+/><=]{1,2}/.exec(program))) {
-    expr = { type: "identifier", value: match[0] };
+    expr = { type: "identifier", name: match[0] };
   } else {
     throw new SyntaxError("Error in identifier syntax: " + match[0]);
   }

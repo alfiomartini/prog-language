@@ -13,7 +13,7 @@ const start = () => {
         return parseFloat(exprTree.value);
         break;
       case "identifier":
-        const id = exprTree.value;
+        const id = exprTree.name;
         if (symbolTable.has(id)){
           return symbolTable.get(id)
         } else {
@@ -21,43 +21,43 @@ const start = () => {
         };
       case "apply":
         let {operator, args} = exprTree;
-        if (operator.value === "+"){
+        if (operator.name === "+"){
           return  eval(args[0]) + eval(args[1]);
         };
-        if (operator.value === "*"){
+        if (operator.name === "*"){
           return  eval(args[0]) * eval(args[1]);
         };
-        if (operator.value === "-"){
+        if (operator.name === "-"){
           return  eval(args[0]) -  eval(args[1]);
         };
-        if (operator.value === "/"){
+        if (operator.name === "/"){
           return  eval(args[0]) / eval(args[1]);
         };
-        if (operator.value === '>'){
+        if (operator.name === '>'){
           return eval(args[0]) > eval(args[1]);
         };
-        if (operator.value === '<'){
+        if (operator.name === '<'){
           return eval(args[0]) < eval(args[1]);
         };
-        if (operator.value === 'define'){
-          symbolTable.set(args[0].value, eval(args[1]))
+        if (operator.name === 'define'){
+          symbolTable.set(args[0].name, eval(args[1]))
         };
-        if (operator.value === 'do'){
+        if (operator.name === 'do'){
           for (let arg of args){
             eval(arg);
           }
         };
-        if (operator.value === 'print'){
+        if (operator.name === 'print'){
           console.log(eval(args[0]));
         }
-        if (operator.value === 'if'){
+        if (operator.name === 'if'){
           if (eval(args[0])){
             eval(args[1]);
           } else {
             eval(args[2]);
           }
         };
-        if (operator.value === 'while'){
+        if (operator.name === 'while'){
           while (eval(args[0])){
             eval(args[1]);
           }
