@@ -75,7 +75,7 @@ function eval(exprTree, env){
 
 function evalPrg(text){
   try {
-    eval(parsePrg(text).expr, topEnv);
+    eval(parsePrg(text).expr, Object.create(topEnv));
   } 
   catch (error){
    console.log(error.message);
