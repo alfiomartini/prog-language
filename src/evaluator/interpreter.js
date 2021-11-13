@@ -28,6 +28,12 @@ function eval(exprTree){
       if (expr.value === "/"){
         return  eval(args[0]) / eval(args[1]);
       };
+      if (expr.value === '>'){
+        return eval(args[0]) > eval(args[1]);
+      };
+      if (expr.value === '<'){
+        return eval(args[0]) < eval(args[1]);
+      };
       if (expr.value === 'define'){
         symbolTable.set(args[0].value, eval(args[1]))
       };
@@ -38,6 +44,13 @@ function eval(exprTree){
       };
       if (expr.value === 'print'){
         console.log(eval(args[0]));
+      }
+      if (expr.value === 'if'){
+        if (eval(args[0])){
+          eval(args[1]);
+        } else {
+          eval(args[2]);
+        }
       }
       break;
   }
