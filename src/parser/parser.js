@@ -8,9 +8,9 @@
 
 function parseExpression(program) {
   program = skipSpaces(program);
-  let id = match_id(program);
-  let result = match_apply(id.expr, id.program);
-  return { expr: result.expr, program: result.program };
+  let { expr: _expr, program: _program } = match_id(program);
+  let { expr: expr_, program: program_ } = match_apply(_expr, _program);
+  return { expr: expr_, program: program_ };
 }
 
 function match_id(program) {
@@ -18,7 +18,7 @@ function match_id(program) {
   let match, expr;
   // strings
   if ((match = /^"([^"]*)"/.exec(program))) {
-    expr = { type: "identifier", value: match[1] };
+    expr = { type: "string", value: match[1] };
   }
   // numbers
   else if ((match = /^\d+/.exec(program))) {
@@ -40,8 +40,9 @@ function match_apply(expr, program) {
   if (program[0] !== "(") return { expr: expr, program: program };
   // it is an application, remove '(' and proceed to match arguments
   program = program.slice(1);
-  const expr_ = { type: "apply", expr: expr, args: [] };
-  const result = match_argList(expr_, program);
+  const applyExp = { type: "apply", expr: expr, args: [] };
+  // result = {exp, program}
+  const result = match_argList(applyExp, program);
   if (result.program[0] !== ")") {
     throw new SyntaxError("Closing parenthesis expected: " + result.program);
   }
@@ -54,6 +55,7 @@ function match_argList(expr, program) {
   program = skipSpaces(program);
   // empty application (no args)
   if (program[0] === ")") return { expr, program };
+  // result = {expr, program}
   let result = parseExpression(program);
   expr.args.push(result.expr);
   result = match_restList(expr, result.program);
