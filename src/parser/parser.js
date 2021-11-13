@@ -40,14 +40,14 @@ function match_apply(expr, program) {
   if (program[0] !== "(") return { expr: expr, program: program };
   // it is an application, remove '(' and proceed to match arguments
   program = program.slice(1);
-  const applyExp = { type: "apply", expr: expr, args: [] };
+  const applyExp = { type: "apply", operator: expr, args: [] };
   // result = {exp, program}
   const result = match_argList(applyExp, program);
   if (result.program[0] !== ")") {
     throw new SyntaxError("Closing parenthesis expected: " + result.program);
   }
-  // remove closing parenthesis
-  result.program = result.program.slice(1);
+  // remove closing parenthesis and remaining spaces/newlines, etc
+  result.program = skipSpaces(result.program.slice(1));
   return result;
 }
 

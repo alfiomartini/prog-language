@@ -20,44 +20,44 @@ const start = () => {
           throw new SyntaxError(`identifier ${id} is not defined.`)
         };
       case "apply":
-        let {expr, args} = exprTree;
-        if (expr.value === "+"){
+        let {operator, args} = exprTree;
+        if (operator.value === "+"){
           return  eval(args[0]) + eval(args[1]);
         };
-        if (expr.value === "*"){
+        if (operator.value === "*"){
           return  eval(args[0]) * eval(args[1]);
         };
-        if (expr.value === "-"){
+        if (operator.value === "-"){
           return  eval(args[0]) -  eval(args[1]);
         };
-        if (expr.value === "/"){
+        if (operator.value === "/"){
           return  eval(args[0]) / eval(args[1]);
         };
-        if (expr.value === '>'){
+        if (operator.value === '>'){
           return eval(args[0]) > eval(args[1]);
         };
-        if (expr.value === '<'){
+        if (operator.value === '<'){
           return eval(args[0]) < eval(args[1]);
         };
-        if (expr.value === 'define'){
+        if (operator.value === 'define'){
           symbolTable.set(args[0].value, eval(args[1]))
         };
-        if (expr.value === 'do'){
+        if (operator.value === 'do'){
           for (let arg of args){
             eval(arg);
           }
         };
-        if (expr.value === 'print'){
+        if (operator.value === 'print'){
           console.log(eval(args[0]));
         }
-        if (expr.value === 'if'){
+        if (operator.value === 'if'){
           if (eval(args[0])){
             eval(args[1]);
           } else {
             eval(args[2]);
           }
         };
-        if (expr.value === 'while'){
+        if (operator.value === 'while'){
           while (eval(args[0])){
             eval(args[1]);
           }
