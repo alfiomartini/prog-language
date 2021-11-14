@@ -13,7 +13,6 @@ function eval(exprTree, env){
       return exprTree.value;
     case "number":
       return parseFloat(exprTree.value);
-      break;
     case "identifier":
       const id = exprTree.name;
       if (id in env){
@@ -75,7 +74,8 @@ function eval(exprTree, env){
 
 function evalPrg(text){
   try {
-    eval(parsePrg(text).expr, Object.create(topEnv));
+    let val = eval(parsePrg(text).expr, Object.create(topEnv));
+    // console.log(val);
   } 
   catch (error){
    console.log(error.message);

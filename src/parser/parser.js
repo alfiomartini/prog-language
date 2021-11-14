@@ -21,7 +21,7 @@ function match_id(program) {
     expr = { type: "string", value: match[1] };
   }
   // numbers
-  else if ((match = /^\d+/.exec(program))) {
+  else if ((match = /^\d+(\.\d+)?/.exec(program))) {
     expr = { type: "number", value: match[0] };
   }
   // identifiers (for definitions)
