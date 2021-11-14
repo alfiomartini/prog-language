@@ -10,7 +10,9 @@ for (let op of ["+", "-", "*", "/", "<", ">", "<=", ">="]) {
 
 const reservedOps = {
   define: (args, env) => {
-    env[args[0].name] = evalExp(args[1], env);
+    if (args.length !== 2) {
+      throw new SyntaxError('Wrong number of arguments to "define"');
+    } else env[args[0].name] = evalExp(args[1], env);
   },
   do: (args, env) => {
     for (let arg of args) {
@@ -18,20 +20,29 @@ const reservedOps = {
     }
   },
   if: (args, env) => {
-    if (evalExp(args[0], env)) {
+    if (args.length !== 3) {
+      throw new SyntaxError('Wrong number of arguments to "if"');
+    } else if (evalExp(args[0], env)) {
       evalExp(args[1], env);
     } else {
       evalExp(args[2], env);
     }
   },
   while: (args, env) => {
-    while (evalExp(args[0], env)) {
-      evalExp(args[1], env);
-    }
+    if (args.length !== 2) {
+      throw new SyntaxError('Wrong number of arguments to "while"');
+    } else
+      while (evalExp(args[0], env)) {
+        evalExp(args[1], env);
+      }
   },
   print: (args, env) => {
-    const val = evalExp(args[0], env);
-    console.log(val);
+    if (args.length !== 1) {
+      throw new SyntaxError('Wrong number of arguments to "print"');
+    } else {
+      const val = evalExp(args[0], env);
+      console.log(val);
+    }
   },
 };
 
