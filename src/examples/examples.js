@@ -25,7 +25,7 @@ const prg11 = `
       print(total))
 `;
 
-const programs = [
+export const programs = [
   prg01,
   prg02,
   prg03,

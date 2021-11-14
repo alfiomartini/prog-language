@@ -1,40 +1,42 @@
+import { programs } from "../examples/examples.js";
+import { parsePrg } from "../parser/parser.js";
 
 const topEnv = Object.create(null);
 // initialize topEnv
 
-const reservedOps = {
-  'define':(args, env) => {
-    env[args[0].name] = eval(args[1], env);
-  },
-  'do':(args, env) => {
-    for (let arg of args){
-      eval(arg, env);
-    }
-  },
-  'if':(args, env) => {
-    if (eval(args[0], env)){
-      eval(args[1], env);
-    } else {
-      eval(args[2], env);
-    }
-  },
-  'while':(args, env) => {
-    while (eval(args[0], env)){
-      eval(args[1], env);
-    }
-  },
-  'print':(args, env) => {
-    const val = eval(args[0], env);
-    console.log(val);
-  }
-};
-
-for (let op of ['+','-','*','/', '<','>', '<=','>=']){
-  topEnv[op] =  new Function("x, y", `return x ${op} y;`);
+for (let op of ["+", "-", "*", "/", "<", ">", "<=", ">="]) {
+  topEnv[op] = new Function("x, y", `return x ${op} y;`);
 }
 
-// env is a map
-function eval(exprTree, env){
+const reservedOps = {
+  define: (args, env) => {
+    env[args[0].name] = evalExp(args[1], env);
+  },
+  do: (args, env) => {
+    for (let arg of args) {
+      evalExp(arg, env);
+    }
+  },
+  if: (args, env) => {
+    if (evalExp(args[0], env)) {
+      evalExp(args[1], env);
+    } else {
+      evalExp(args[2], env);
+    }
+  },
+  while: (args, env) => {
+    while (evalExp(args[0], env)) {
+      evalExp(args[1], env);
+    }
+  },
+  print: (args, env) => {
+    const val = evalExp(args[0], env);
+    console.log(val);
+  },
+};
+
+// env is an object see as a Map
+function evalExp(exprTree, env) {
   switch (exprTree.type) {
     case "string":
       return exprTree.value;
@@ -42,22 +44,21 @@ function eval(exprTree, env){
       return parseFloat(exprTree.value);
     case "identifier":
       const id = exprTree.name;
-      if (id in env){
-        return env[id]
+      if (id in env) {
+        return env[id];
       } else {
-        throw new SyntaxError(`identifier ${id} is not defined.`)
-      };
-    case "apply":
-      let {operator, args} = exprTree;
-      if (operator.name in reservedOps){
-        return reservedOps[operator.name](args, env);
+        throw new SyntaxError(`identifier ${id} is not defined.`);
       }
-      else {
+    case "apply":
+      let { operator, args } = exprTree;
+      if (operator.name in reservedOps) {
+        return reservedOps[operator.name](args, env);
+      } else {
         // it must be an operation in the topScope environment
         // look up function bound to operator.name
-        const op = eval(operator, env);
-        if (typeof op === 'function'){
-          const argsArray =  args.map(arg => eval(arg, env));
+        const op = evalExp(operator, env);
+        if (typeof op === "function") {
+          const argsArray = args.map((arg) => evalExp(arg, env));
           // apply function to arguments
           return op(...argsArray);
         } else {
@@ -67,19 +68,20 @@ function eval(exprTree, env){
   }
 }
 
-
-function evalPrg(text){
+function evalPrg(text) {
   try {
-    let val = eval(parsePrg(text).expr, Object.create(topEnv));
+    // building local environment on top of global scope (topEnv)
+    let val = evalExp(parsePrg(text).expr, Object.create(topEnv));
     // console.log(val);
-  } 
-  catch (error){
-   console.log(error.message);
+  } catch (error) {
+    console.log(error.message);
   }
 }
 
 const runAll = () => {
-  for (let prg of programs){
+  for (let prg of programs) {
     evalPrg(prg);
   }
-}
+};
+
+window.runAll = runAll;

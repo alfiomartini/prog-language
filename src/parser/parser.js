@@ -83,7 +83,7 @@ function skipSpaces(text) {
   }
 }
 
-function parsePrg(text) {
+export function parsePrg(text) {
   let expr, program;
   try {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
