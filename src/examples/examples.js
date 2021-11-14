@@ -25,6 +25,12 @@ const prg11 = `
       print(total))
 `;
 
+const prg12 = `do(define(plusOne, fun(x, +(x,1))), 
+                  print(plusOne(10)))`;
+const prg13 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
+                  print(sign(10)))`;
+const prg14 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
+                  print(sign(-5)))`;
 export const programs = [
   prg01,
   prg02,
@@ -37,4 +43,7 @@ export const programs = [
   prg09,
   prg10,
   prg11,
+  prg12,
+  prg13,
+  prg14,
 ];

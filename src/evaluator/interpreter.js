@@ -4,11 +4,35 @@ import { parsePrg } from "../parser/parser.js";
 const topEnv = Object.create(null);
 // initialize topEnv
 
-for (let op of ["+", "-", "*", "/", "<", ">", "<=", ">="]) {
+for (let op of ["+", "-", "*", "/", "<", ">", "<=", ">=", "=="]) {
   topEnv[op] = new Function("x, y", `return x ${op} y;`);
 }
 
 const reservedOps = {
+  fun: (args, env) => {
+    if (args.length < 1) {
+      throw new SyntaxError("A function should have at least a body");
+    }
+    const body = args[args.length - 1];
+    const params = args.slice(0, args.length - 1).map((expr) => {
+      if (expr.type !== "identifier") {
+        throw new SyntaxError("Parameter names must be words");
+      }
+      return expr.name;
+    });
+    return function () {
+      if (arguments.length !== params.length) {
+        throw new SyntaxError(
+          "Number of arguments must match the number of parameters"
+        );
+      }
+      const localEnv = Object.create(env);
+      for (let k = 0; k < params.length; k++) {
+        localEnv[params[k]] = arguments[k];
+      }
+      return evalExp(body, localEnv);
+    };
+  },
   define: (args, env) => {
     if (args.length !== 2) {
       throw new SyntaxError('Wrong number of arguments to "define"');
@@ -22,19 +46,21 @@ const reservedOps = {
   if: (args, env) => {
     if (args.length !== 3) {
       throw new SyntaxError('Wrong number of arguments to "if"');
-    } else if (evalExp(args[0], env)) {
-      evalExp(args[1], env);
+    } else if (evalExp(args[0], env) === true) {
+      return evalExp(args[1], env);
     } else {
-      evalExp(args[2], env);
+      return evalExp(args[2], env);
     }
   },
   while: (args, env) => {
+    let val;
     if (args.length !== 2) {
       throw new SyntaxError('Wrong number of arguments to "while"');
     } else
-      while (evalExp(args[0], env)) {
-        evalExp(args[1], env);
+      while (evalExp(args[0], env) === true) {
+        val = evalExp(args[1], env);
       }
+    return val;
   },
   print: (args, env) => {
     if (args.length !== 1) {
@@ -42,6 +68,7 @@ const reservedOps = {
     } else {
       const val = evalExp(args[0], env);
       console.log(val);
+      return val;
     }
   },
 };
@@ -96,3 +123,5 @@ const runAll = () => {
 };
 
 window.runAll = runAll;
+window.parsePrg = parsePrg;
+window.programs = programs;
