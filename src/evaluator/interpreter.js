@@ -2,6 +2,33 @@
 const topEnv = Object.create(null);
 // initialize topEnv
 
+const reservedOps = {
+  'define':(args, env) => {
+    env[args[0].name] = eval(args[1], env);
+  },
+  'do':(args, env) => {
+    for (let arg of args){
+      eval(arg, env);
+    }
+  },
+  'if':(args, env) => {
+    if (eval(args[0], env)){
+      eval(args[1], env);
+    } else {
+      eval(args[2], env);
+    }
+  },
+  'while':(args, env) => {
+    while (eval(args[0], env)){
+      eval(args[1], env);
+    }
+  },
+  'print':(args, env) => {
+    const val = eval(args[0], env);
+    console.log(val);
+  }
+};
+
 for (let op of ['+','-','*','/', '<','>', '<=','>=']){
   topEnv[op] =  new Function("x, y", `return x ${op} y;`);
 }
@@ -22,33 +49,9 @@ function eval(exprTree, env){
       };
     case "apply":
       let {operator, args} = exprTree;
-      if (operator.name === 'define'){
-        env[args[0].name] = eval(args[1], env);
+      if (operator.name in reservedOps){
+        return reservedOps[operator.name](args, env);
       }
-      else if (operator.name === 'do'){
-        let val;
-        for (let arg of args){
-          val = eval(arg, env);
-        }
-        // return val;
-      }
-      else if (operator.name === 'print'){
-        let val = eval(args[0], env);
-        console.log(val);
-        // return val;
-      }
-      else if (operator.name === 'if'){
-        if (eval(args[0], env)){
-          eval(args[1], env);
-        } else {
-          eval(args[2], env);
-        }
-      }
-      else if (operator.name === 'while'){
-        while (eval(args[0], env)){
-          eval(args[1], env);
-        }
-      } 
       else {
         // it must be an operation in the topScope environment
         // look up function bound to operator.name
