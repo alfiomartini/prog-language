@@ -22,52 +22,45 @@ function eval(exprTree, env){
       };
     case "apply":
       let {operator, args} = exprTree;
-      if (operator.name === "+"){
-        return  eval(args[0], env) + eval(args[1], env);
-      };
-      if (operator.name === "*"){
-        return  eval(args[0], env) * eval(args[1], env);
-      };
-      if (operator.name === "-"){
-        return  eval(args[0], env) -  eval(args[1], env);
-      };
-      if (operator.name === "/"){
-        return  eval(args[0], env) / eval(args[1], env);
-      };
-      if (operator.name === '>'){
-        return eval(args[0], env) > eval(args[1], env);
-      };
-      if (operator.name === '<'){
-        return eval(args[0], env) < eval(args[1], env);
-      };
       if (operator.name === 'define'){
         env[args[0].name] = eval(args[1], env);
-      };
-      if (operator.name === 'do'){
+      }
+      else if (operator.name === 'do'){
         let val;
         for (let arg of args){
           val = eval(arg, env);
         }
         // return val;
-      };
-      if (operator.name === 'print'){
+      }
+      else if (operator.name === 'print'){
         let val = eval(args[0], env);
         console.log(val);
         // return val;
       }
-      if (operator.name === 'if'){
+      else if (operator.name === 'if'){
         if (eval(args[0], env)){
           eval(args[1], env);
         } else {
           eval(args[2], env);
         }
-      };
-      if (operator.name === 'while'){
+      }
+      else if (operator.name === 'while'){
         while (eval(args[0], env)){
           eval(args[1], env);
         }
+      } 
+      else {
+        // it must be an operation in the topScope environment
+        // look up function bound to operator.name
+        const op = eval(operator, env);
+        if (typeof op === 'function'){
+          const argsArray =  args.map(arg => eval(arg, env));
+          // apply function to arguments
+          return op(...argsArray);
+        } else {
+          throw new SyntaxError(`Function ${operator.name} is undefined`);
+        }
       }
-      break;
   }
 }
 
