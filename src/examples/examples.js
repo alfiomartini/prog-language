@@ -39,6 +39,33 @@ const prg15 = `
     print("large"),
     # another comment
     print("small")))`;
+
+const prg16 = `
+      do(
+        define(pow, fun(base, exp,
+          if(==(exp, 0), 1, 
+          *(base, pow(base, -(exp,1)))))),
+          print(pow(2,10)))
+    `;
+const prg17 = `do(define(arr, array(1,2,3)), 
+                   print(arr),
+                   print(length(arr)),
+                   print(elem(arr,1)))`;
+
+// 15
+const prg18 = `
+do(
+  define(sum, 
+	fun(arr, 
+		do(define(i,0),
+		   define(total,0),
+		   while(<(i, length(arr)),
+			 do(define(total, +(total, elem(arr,i))),
+			   define(i,+(i,1)))),
+		   print(total)))),
+		   print(sum(array(1,2,3,4,5))))
+`;
+
 export const programs = [
   prg01,
   prg02,
@@ -55,4 +82,7 @@ export const programs = [
   prg13,
   prg14,
   prg15,
+  prg16,
+  prg17,
+  prg18,
 ];

@@ -80,6 +80,7 @@ export function skipSpaces(text) {
     return "";
   } else {
     text = text.slice(index);
+    // remove line comments (if any)
     if (text[0] === "#") return text.replace(/#.*\s*/, "");
     else return text;
   }

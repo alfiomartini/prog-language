@@ -8,6 +8,18 @@ for (let op of ["+", "-", "*", "/", "<", ">", "<=", ">=", "=="]) {
   topEnv[op] = new Function("x, y", `return x ${op} y;`);
 }
 
+topEnv.array = (...args) => {
+  const arr = [];
+  for (let k = 0; k < args.length; k++) {
+    arr.push(args[k]);
+  }
+  return arr;
+};
+
+topEnv.length = (array) => array.length;
+
+topEnv.elem = (array, index) => array[index];
+
 const reservedOps = {
   fun: (args, env) => {
     if (args.length < 1) {
@@ -56,11 +68,12 @@ const reservedOps = {
     let val;
     if (args.length !== 2) {
       throw new SyntaxError('Wrong number of arguments to "while"');
-    } else
+    } else {
       while (evalExp(args[0], env) === true) {
         val = evalExp(args[1], env);
       }
-    return val;
+      return val;
+    }
   },
   print: (args, env) => {
     if (args.length !== 1) {
@@ -91,17 +104,16 @@ function evalExp(exprTree, env) {
       let { operator, args } = exprTree;
       if (operator.name in reservedOps) {
         return reservedOps[operator.name](args, env);
+      }
+      // it must be an operation in the topScope environment
+      // look up function bound to operator.name
+      const op = evalExp(operator, env);
+      if (typeof op === "function") {
+        const argsArray = args.map((arg) => evalExp(arg, env));
+        // apply function to arguments
+        return op(...argsArray);
       } else {
-        // it must be an operation in the topScope environment
-        // look up function bound to operator.name
-        const op = evalExp(operator, env);
-        if (typeof op === "function") {
-          const argsArray = args.map((arg) => evalExp(arg, env));
-          // apply function to arguments
-          return op(...argsArray);
-        } else {
-          throw new SyntaxError(`Function ${operator.name} is undefined`);
-        }
+        throw new SyntaxError(`Function ${operator.name} is undefined`);
       }
   }
 }
@@ -110,6 +122,7 @@ function evalPrg(text) {
   try {
     // building local environment on top of global scope (topEnv)
     let val = evalExp(parsePrg(text).expr, Object.create(topEnv));
+    return val;
     // console.log(val);
   } catch (error) {
     console.log(error.message);
@@ -118,7 +131,8 @@ function evalPrg(text) {
 
 const runAll = () => {
   for (let prg of programs) {
-    evalPrg(prg);
+    let val = evalPrg(prg);
+    // console.log(val);
   }
 };
 
@@ -127,3 +141,5 @@ window.parsePrg = parsePrg;
 window.skipSpaces = skipSpaces;
 window.programs = programs;
 window.evalPrg = evalPrg;
+window.topEnv = topEnv;
+window.evalExp = evalExp;
