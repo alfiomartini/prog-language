@@ -31,6 +31,14 @@ const prg13 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
                   print(sign(10)))`;
 const prg14 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
                   print(sign(-5)))`;
+
+const prg15 = `
+  # this is a comment
+  do(define(x,10),
+    if(>(x,5), # another comment
+    print("large"),
+    # another comment
+    print("small")))`;
 export const programs = [
   prg01,
   prg02,
@@ -46,4 +54,5 @@ export const programs = [
   prg12,
   prg13,
   prg14,
+  prg15,
 ];

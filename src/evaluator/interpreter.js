@@ -1,5 +1,5 @@
 import { programs } from "../examples/examples.js";
-import { parsePrg } from "../parser/parser.js";
+import { parsePrg, skipSpaces } from "../parser/parser.js";
 
 const topEnv = Object.create(null);
 // initialize topEnv
@@ -124,4 +124,6 @@ const runAll = () => {
 
 window.runAll = runAll;
 window.parsePrg = parsePrg;
+window.skipSpaces = skipSpaces;
 window.programs = programs;
+window.evalPrg = evalPrg;

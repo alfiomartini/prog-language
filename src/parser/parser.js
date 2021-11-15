@@ -73,13 +73,15 @@ function match_restList(expr, program) {
   return result;
 }
 
-function skipSpaces(text) {
+export function skipSpaces(text) {
   // return text.replace(/\s/gm, "");
   let index = text.search(/\S/);
   if (index === -1) {
     return "";
   } else {
-    return text.slice(index);
+    text = text.slice(index);
+    if (text[0] === "#") return text.replace(/#.*\s*/, "");
+    else return text;
   }
 }
 
