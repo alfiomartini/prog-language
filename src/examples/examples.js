@@ -56,14 +56,14 @@ const prg17 = `do(define(arr, array(1,2,3)),
 const prg18 = `
 do(
   define(sum, 
-	fun(arr, 
-		do(define(i,0),
-		   define(total,0),
-		   while(<(i, length(arr)),
-			 do(define(total, +(total, elem(arr,i))),
-			   define(i,+(i,1)))),
-		   print(total)))),
-		   print(sum(array(1,2,3,4,5))))
+    fun(arr, 
+      do(define(i,0),
+        define(total,0),
+        while(<(i, length(arr)),
+          do(define(total, +(total, elem(arr,i))),
+             define(i,+(i,1)))),
+        print(total)))),
+	print(sum(array(1,2,3,4,5))))
 `;
 
 export const programs = [

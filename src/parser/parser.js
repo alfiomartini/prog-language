@@ -92,7 +92,7 @@ export function parsePrg(text) {
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
     ({ expr, program } = parseExpression(text));
     if (skipSpaces(program).length > 0) {
-      throw new SyntaxError("Unexpect text after program :" + program);
+      throw new SyntaxError("Unexpected text after program :" + program);
     }
   } catch (error) {
     console.log(error.message);
