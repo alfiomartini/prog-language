@@ -48,9 +48,7 @@ const prg16 = `
           print(pow(2,10)))
     `;
 const prg17 = `do(define(arr, array(1,2,3)), 
-                   print(arr),
-                   print(length(arr)),
-                   print(elem(arr,1)))`;
+                   print(arr))`;
 
 // 15
 const prg18 = `
@@ -62,8 +60,27 @@ do(
         while(<(i, length(arr)),
           do(define(total, +(total, elem(arr,i))),
              define(i,+(i,1)))),
-        print(total)))),
+        # total is the value returned by the function
+        total))),
 	print(sum(array(1,2,3,4,5))))
+`;
+const prog19 = `
+  do(define(x,4),
+     # set is used to update ids already defined
+     # kind of global bindings in the context
+     define(setx, fun(val, set(x,val))),
+     # x = 4
+     print(x),
+     setx(50),
+     # x = 50
+     print(x))
+`;
+
+const prog20 = `
+  do(define(x,4),
+     define(sety, fun(val, set(y,val))),
+     # reference error
+     sety(50))
 `;
 
 export const programs = [
@@ -85,4 +102,6 @@ export const programs = [
   prg16,
   prg17,
   prg18,
+  prog19,
+  prog20,
 ];

@@ -45,15 +45,47 @@ const reservedOps = {
       return evalExp(body, localEnv);
     };
   },
+  set: (args, env) => {
+    if (args.length !== 2) {
+      throw new SyntaxError('Wrong number of arguments to "set"');
+    }
+    const identifier = args[0].name;
+    let currEnv = env;
+    while (!Object.hasOwnProperty.call(currEnv, identifier)) {
+      // go up in the prototype chain
+      currEnv = Object.getPrototypeOf(currEnv);
+      //  we have not found a definition for 'property'
+      if (currEnv === null) {
+        throw new ReferenceError(
+          `Reference error: Identifier ${identifier} is not defined.`
+        );
+      }
+    }
+    // evaluate 'val' in the original environment
+    let val = evalExp(args[1], env);
+    // update identifier in the correct environment with 'val'
+    currEnv[identifier] = val;
+    // testing
+    return evalExp(identifier, env);
+  },
   define: (args, env) => {
     if (args.length !== 2) {
       throw new SyntaxError('Wrong number of arguments to "define"');
-    } else env[args[0].name] = evalExp(args[1], env);
+    }
+    let val = evalExp(args[1], env);
+    const identifier = args[0].name;
+    // if identifier is already defined, it becomes a new
+    // binding, shadowing the previous binding
+    env[identifier] = val;
+    return evalExp(args[0], env);
+    // return val;
   },
   do: (args, env) => {
+    let val;
     for (let arg of args) {
-      evalExp(arg, env);
+      val = evalExp(arg, env);
     }
+    return val;
   },
   if: (args, env) => {
     if (args.length !== 3) {
