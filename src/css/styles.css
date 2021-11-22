@@ -27,9 +27,12 @@ body {
 
 #result {
   padding: 5px;
-  height: 30px;
+  height: 40px;
   border: 1px solid black;
   width: 100%;
+  overflow-y: auto;
+  background-color: wheat;
+  color: black;
 }
 
 #panel {
@@ -58,8 +61,7 @@ select {
 }
 
 #panel,
-#prgtext,
-#result {
+#prgtext {
   background-color: #500000;
   color: lightyellow;
 }
