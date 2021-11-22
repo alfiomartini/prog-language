@@ -1,0 +1,20 @@
+{
+  "name": "prog-language",
+  "version": "1.0.0",
+  "description": "A parser and interpreter for an imperative language.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfiomartini/prog-language.git"
+  },
+  "keywords": ["parser", "regular expressions", "interpreter"],
+  "author": "Alfio Martini",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alfiomartini/prog-language/issues"
+  },
+  "homepage": "https://github.com/alfiomartini/prog-language"
+}

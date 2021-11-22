@@ -14,16 +14,16 @@ evalBtn.addEventListener("click", evalTextArea);
 function buildSelect() {
   programs.forEach((prg, index) => {
     const option = document.createElement("option");
-    option.value = index + 1;
+    option.value = index;
     option.innerText = `prg${index}`;
     select.append(option);
   });
-  let selected = 1;
+  let selected = 0;
   select.value = selected;
-  textarea.value = programs[selected - 1];
+  textarea.value = programs[selected];
 }
 function evalSelect(event) {
-  textarea.value = programs[event.target.value - 1];
+  textarea.value = programs[event.target.value];
 }
 function evalTextArea() {
   const prg = textarea.value;
