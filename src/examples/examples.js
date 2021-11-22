@@ -1,22 +1,22 @@
-const prg01 = `
+const prg0 = `
   do(define(x,10),
     if(>(x,5),
     print("large"),
     print("small")))`;
-const prg02 = `
+const prg1 = `
     do(define(a,5),
        define(x, +(a,10)),
        print(x))`;
-const prg03 = `do(define(house, "red house"), print(house))`;
-const prg04 = `do(define(x,*(5,10)), print(x))`; // 50
-const prg05 = `do(define(x,*(3, +(5,10))), print(x))`; // 45
-const prg06 = `print(x)`;
-const prg07 = `print(256)`;
-const prg08 = `print(-(+(20,30), *(15,10)))`; // -100
-const prg09 = `do(define(x, 3.1415), print(x))`;
-const prg10 = `+(x,10)`;
+const prg2 = `do(define(house, "red house"), print(house))`;
+const prg3 = `do(define(x,*(5,10)), print(x))`; // 50
+const prg4 = `do(define(x,*(3, +(5,10))), print(x))`; // 45
+const prg5 = `print(x)`;
+const prg6 = `print(256)`;
+const prg7 = `print(-(+(20,30), *(15,10)))`; // -100
+const prg8 = `do(define(x, 3.1415), print(x))`;
+const prg9 = `+(x,10)`;
 // total = 55
-const prg11 = `
+const prg10 = `
     do(define(total,0),
       define(count,1),
       while(<(count,11),
@@ -25,14 +25,14 @@ const prg11 = `
       print(total))
 `;
 
-const prg12 = `do(define(plusOne, fun(x, +(x,1))), 
+const prg11 = `do(define(plusOne, fun(x, +(x,1))), 
                   print(plusOne(10)))`;
-const prg13 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
+const prg12 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
                   print(sign(10)))`;
-const prg14 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
+const prg13 = `do(define(sign, fun(x, if(>=(x,0),"positive","negative"))),
                   print(sign(-5)))`;
 
-const prg15 = `
+const prg14 = `
   # this is a comment
   do(define(x,10),
     if(>(x,5), # another comment
@@ -40,18 +40,18 @@ const prg15 = `
     # another comment
     print("small")))`;
 
-const prg16 = `
+const prg15 = `
       do(
         define(pow, fun(base, exp,
           if(==(exp, 0), 1, 
           *(base, pow(base, -(exp,1)))))),
           print(pow(2,10)))
     `;
-const prg17 = `do(define(arr, array(1,2,3)), 
+const prg16 = `do(define(arr, array(1,2,3)), 
                    print(arr))`;
 
 // 15
-const prg18 = `
+const prg17 = `
 do(
   define(sum, 
     fun(arr, 
@@ -64,7 +64,7 @@ do(
         total))),
 	print(sum(array(1,2,3,4,5))))
 `;
-const prog19 = `
+const prg18 = `
   do(define(x,4),
      # set is used to update ids already defined
      # kind of global bindings in the context
@@ -76,7 +76,7 @@ const prog19 = `
      print(x))
 `;
 
-const prog20 = `
+const prog19 = `
   do(define(x,4),
      define(sety, fun(val, set(y,val))),
      # reference error
@@ -84,15 +84,16 @@ const prog20 = `
 `;
 
 export const programs = [
-  prg01,
-  prg02,
-  prg03,
-  prg04,
-  prg05,
-  prg06,
-  prg07,
-  prg08,
-  prg09,
+  prg0,
+  prg1,
+  prg2,
+  prg3,
+  prg4,
+  prg5,
+  prg6,
+  prg7,
+  prg8,
+  prg9,
   prg10,
   prg11,
   prg12,
@@ -103,5 +104,4 @@ export const programs = [
   prg17,
   prg18,
   prog19,
-  prog20,
 ];

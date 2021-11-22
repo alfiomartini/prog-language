@@ -150,7 +150,7 @@ function evalExp(exprTree, env) {
   }
 }
 
-function evalPrg(text) {
+export function evalPrg(text) {
   try {
     // building local environment on top of global scope (topEnv);
     let prgTree = parsePrg(text);
@@ -162,7 +162,8 @@ function evalPrg(text) {
     return val;
     // console.log(val);
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
+    return error.message;
   }
 }
 

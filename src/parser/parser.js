@@ -28,7 +28,7 @@ function match_id(program) {
   else if ((match = /^\w+|[-*+/><=]{1,2}/.exec(program))) {
     expr = { type: "identifier", name: match[0] };
   } else {
-    throw new SyntaxError("Error in identifier syntax: " + match[0]);
+    throw new SyntaxError("Unexpected syntax: " + match[0]);
   }
   // update program text
   program = program.slice(match[0].length);
