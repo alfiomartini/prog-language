@@ -152,8 +152,13 @@ function evalExp(exprTree, env) {
 
 function evalPrg(text) {
   try {
-    // building local environment on top of global scope (topEnv)
-    let val = evalExp(parsePrg(text).expr, Object.create(topEnv));
+    // building local environment on top of global scope (topEnv);
+    let prgTree = parsePrg(text);
+    if (prgTree.error) {
+      // console.log(prgTree.error);
+      return prgTree.error;
+    }
+    let val = evalExp(prgTree.expr, Object.create(topEnv));
     return val;
     // console.log(val);
   } catch (error) {
@@ -164,7 +169,7 @@ function evalPrg(text) {
 const runAll = () => {
   for (let prg of programs) {
     let val = evalPrg(prg);
-    // console.log(val);
+    console.log(val);
   }
 };
 

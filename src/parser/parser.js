@@ -94,8 +94,9 @@ export function parsePrg(text) {
     if (skipSpaces(program).length > 0) {
       throw new SyntaxError("Unexpected text after program :" + program);
     }
+    return { expr, program };
   } catch (error) {
     console.log(error.message);
+    return { error: error.message };
   }
-  return { expr, program };
 }
