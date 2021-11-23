@@ -7,9 +7,19 @@ const evalBtn = document.getElementById("eval");
 const result = document.getElementById("result");
 const select = document.getElementById("programs");
 buildSelect();
+smallScreen();
 
 select.addEventListener("change", evalSelect);
 evalBtn.addEventListener("click", evalTextArea);
+window.addEventListener("resize", smallScreen);
+
+function smallScreen() {
+  let width = window.innerWidth;
+  const labelElm = document.querySelector("#panel > label");
+  if (width <= 380) {
+    labelElm.innerText = "Choose or Type";
+  }
+}
 
 function buildSelect() {
   programs.forEach((prg, index) => {
