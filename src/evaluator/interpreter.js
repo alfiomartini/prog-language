@@ -174,10 +174,10 @@ const runAll = () => {
   }
 };
 
-window.runAll = runAll;
-window.parsePrg = parsePrg;
-window.skipSpaces = skipSpaces;
-window.programs = programs;
-window.evalPrg = evalPrg;
-window.topEnv = topEnv;
-window.evalExp = evalExp;
+// window.runAll = runAll;
+// window.parsePrg = parsePrg;
+// window.skipSpaces = skipSpaces;
+// window.programs = programs;
+// window.evalPrg = evalPrg;
+// window.topEnv = topEnv;
+// window.evalExp = evalExp;

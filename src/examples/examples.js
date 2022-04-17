@@ -2,11 +2,11 @@ const prg0 = `
   do(define(x,10),
     if(>(x,5),
     print("large"),
-    print("small")))`;
+    print("small")))`; // large
 const prg1 = `
     do(define(a,5),
        define(x, +(a,10)),
-       print(x))`;
+       print(x))`; // 15
 const prg2 = `do(define(house, "red house"), print(house))`;
 const prg3 = `do(define(x,*(5,10)), print(x))`; // 50
 const prg4 = `do(define(x,*(3, +(5,10))), print(x))`; // 45

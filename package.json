@@ -4,17 +4,24 @@
   "description": "A parser and interpreter for an imperative language.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alfiomartini/prog-language.git"
   },
-  "keywords": ["parser", "regular expressions", "interpreter"],
+  "keywords": [
+    "parser",
+    "regular expressions",
+    "interpreter"
+  ],
   "author": "Alfio Martini",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alfiomartini/prog-language/issues"
   },
-  "homepage": "https://alfiomartini.github.io/prog-language"
+  "homepage": "https://alfiomartini.github.io/prog-language",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.11"
+  }
 }
