@@ -4,7 +4,7 @@
   "description": "A parser and interpreter for an imperative language.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "vitest --globals"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,6 @@
   },
   "homepage": "https://alfiomartini.github.io/prog-language",
   "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
-    "jest": "^28.1.0"
+    "vitest": "^0.13.1"
   }
 }
