@@ -22,7 +22,7 @@
   },
   "homepage": "https://alfiomartini.github.io/prog-language",
   "devDependencies": {
-    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-env": "^7.18.2",
     "jest": "^28.1.0"
   }
 }
