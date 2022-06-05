@@ -4,7 +4,7 @@
   "description": "A parser and interpreter for an imperative language.",
   "main": "index.js",
   "scripts": {
-    "test": "vitest --globals"
+    "test": "vitest --globals --reporter verbose"
   },
   "repository": {
     "type": "git",
